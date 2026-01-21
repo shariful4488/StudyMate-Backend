@@ -25,12 +25,14 @@ async function run() {
     const partnerCollection = db.collection("partners");
     const connectionCollection = db.collection("connections");
 
+   
     app.post('/partners', async (req, res) => {
       const profile = req.body;
       const result = await partnerCollection.insertOne(profile);
       res.send(result);
     });
 
+    // Get All Partners 
     app.get('/partners', async (req, res) => {
       const { search, sort } = req.query;
       let query = {};
@@ -47,6 +49,7 @@ async function run() {
       res.send(result);
     });
 
+    // Get Single 
     app.get('/partner/:id', async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
@@ -54,6 +57,7 @@ async function run() {
       res.send(result);
     });
 
+    
     app.post('/connections', async (req, res) => {
       try {
         const { partnerId, ...connectionData } = req.body;
@@ -68,6 +72,7 @@ async function run() {
       }
     });
 
+    // Get My Connections
     app.get('/my-connections/:email', async (req, res) => {
       const email = req.params.email;
       const query = { senderEmail: email };
@@ -75,10 +80,34 @@ async function run() {
       res.send(result);
     });
 
+    // Delete Connection
     app.delete('/connection/:id', async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await connectionCollection.deleteOne(query);
+      res.send(result);
+    });
+
+    // Update Connection Status
+    app.patch('/connection/:id', async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const updateDoc = { $set: { status: req.body.status } };
+      const result = await connectionCollection.updateOne(filter, updateDoc);
+      res.send(result);
+    });
+
+    // Connection Data Update 
+    app.put('/connection-update/:id', async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const updatedDoc = {
+          $set: {
+              partnerName: req.body.partnerName,
+              subject: req.body.subject
+          }
+      };
+      const result = await connectionCollection.updateOne(filter, updatedDoc);
       res.send(result);
     });
 
