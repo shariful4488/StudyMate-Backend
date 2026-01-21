@@ -54,19 +54,19 @@ async function run() {
       res.send(result);
     });
 
-    // app.post('/connections', async (req, res) => {
-    //   try {
-    //     const { partnerId, ...connectionData } = req.body;
-    //     const filter = { _id: new ObjectId(partnerId) };
-    //     const updateDoc = { $inc: { partnerCount: 1 } };
-    //     await partnerCollection.updateOne(filter, updateDoc);
-    //     const doc = { partnerId: new ObjectId(partnerId), ...connectionData, createdAt: new Date() };
-    //     const result = await connectionCollection.insertOne(doc);
-    //     res.send(result);
-    //   } catch (err) {
-    //     res.status(500).send({ error: err.message });
-    //   }
-    // });
+    app.post('/connections', async (req, res) => {
+      try {
+        const { partnerId, ...connectionData } = req.body;
+        const filter = { _id: new ObjectId(partnerId) };
+        const updateDoc = { $inc: { partnerCount: 1 } };
+        await partnerCollection.updateOne(filter, updateDoc);
+        const doc = { partnerId: new ObjectId(partnerId), ...connectionData, createdAt: new Date() };
+        const result = await connectionCollection.insertOne(doc);
+        res.send(result);
+      } catch (err) {
+        res.status(500).send({ error: err.message });
+      }
+    });
 
     // app.get('/my-connections/:email', async (req, res) => {
     //   const email = req.params.email;
