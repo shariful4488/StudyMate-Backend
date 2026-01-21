@@ -31,21 +31,21 @@ async function run() {
       res.send(result);
     });
 
-    // app.get('/partners', async (req, res) => {
-    //   const { search, sort } = req.query;
-    //   let query = {};
-    //   if (search) {
-    //     query.subject = { $regex: search, $options: 'i' };
-    //   }
-    //   let options = {};
-    //   if (sort === 'Expert') {
-    //     options = { sort: { experienceLevel: -1 } }; 
-    //   } else if (sort === 'Beginner') {
-    //     options = { sort: { experienceLevel: 1 } }; 
-    //   }
-    //   const result = await partnerCollection.find(query, options).toArray();
-    //   res.send(result);
-    // });
+    app.get('/partners', async (req, res) => {
+      const { search, sort } = req.query;
+      let query = {};
+      if (search) {
+        query.subject = { $regex: search, $options: 'i' };
+      }
+      let options = {};
+      if (sort === 'Expert') {
+        options = { sort: { experienceLevel: -1 } }; 
+      } else if (sort === 'Beginner') {
+        options = { sort: { experienceLevel: 1 } }; 
+      }
+      const result = await partnerCollection.find(query, options).toArray();
+      res.send(result);
+    });
 
     // app.get('/partner/:id', async (req, res) => {
     //   const id = req.params.id;
