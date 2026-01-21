@@ -75,12 +75,12 @@ async function run() {
       res.send(result);
     });
 
-    // app.delete('/connection/:id', async (req, res) => {
-    //   const id = req.params.id;
-    //   const query = { _id: new ObjectId(id) };
-    //   const result = await connectionCollection.deleteOne(query);
-    //   res.send(result);
-    // });
+    app.delete('/connection/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await connectionCollection.deleteOne(query);
+      res.send(result);
+    });
 
     console.log("Connected to MongoDB!");
   } finally {}
