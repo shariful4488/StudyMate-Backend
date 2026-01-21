@@ -68,12 +68,12 @@ async function run() {
       }
     });
 
-    // app.get('/my-connections/:email', async (req, res) => {
-    //   const email = req.params.email;
-    //   const query = { senderEmail: email };
-    //   const result = await connectionCollection.find(query).toArray();
-    //   res.send(result);
-    // });
+    app.get('/my-connections/:email', async (req, res) => {
+      const email = req.params.email;
+      const query = { senderEmail: email };
+      const result = await connectionCollection.find(query).toArray();
+      res.send(result);
+    });
 
     // app.delete('/connection/:id', async (req, res) => {
     //   const id = req.params.id;
